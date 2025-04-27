@@ -1,0 +1,25 @@
+# macOS system files
+.DS_Store
+
+# Maven
+/target/
+/backend/target/
+
+# IntelliJ IDEA
+/.idea/
+/*.iml
+/out/
+
+# Logs
+*.log
+
+# OS generated files
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp# macOS system files
+.DS_Store
+
+# Maven
+/target/
