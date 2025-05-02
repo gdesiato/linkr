@@ -29,7 +29,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@RequestBody SignupRequest signupRequest) {
         try {
-            userService.registerUser(signupRequest.getEmail(), signupRequest.getPassword());
+            userService.registerUser(signupRequest.email(), signupRequest.password());
             return ResponseEntity.ok("User registered successfully");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -38,14 +38,14 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Optional<User> userOpt = userService.findByEmail(loginRequest.getEmail());
+        Optional<User> userOpt = userService.findByEmail(loginRequest.email());
 
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
 
         User user = userOpt.get();
-        if (!userService.checkPassword(loginRequest.getPassword(), user.getPasswordHash())) {
+        if (!userService.checkPassword(loginRequest.password(), user.getPasswordHash())) {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
 
