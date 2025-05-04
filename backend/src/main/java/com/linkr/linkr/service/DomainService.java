@@ -36,4 +36,15 @@ public class DomainService {
 
         return domainRepository.findAllByOwner(user);
     }
+
+    public void deleteDomain(Long domainId, String userEmail) {
+        Domain domain = domainRepository.findById(domainId)
+                .orElseThrow(() -> new RuntimeException("Domain not found"));
+
+        if (!domain.getOwner().getEmail().equals(userEmail)) {
+            throw new RuntimeException("Access denied: You do not own this domain");
+        }
+
+        domainRepository.delete(domain);
+    }
 }
