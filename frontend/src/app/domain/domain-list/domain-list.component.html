@@ -1,1 +1,14 @@
-<p>domain-list works!</p>
+<div class="domain-container">
+    <h2>Your Domains</h2>
+  
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="error">{{ error }}</div>
+  
+    <ul *ngIf="!loading && domains.length > 0">
+      <li *ngFor="let domain of domains">
+        {{ domain.url }} <small>({{ domain.createdAt | date:'short' }})</small>
+      </li>
+    </ul>
+  
+    <p *ngIf="!loading && domains.length === 0">No domains yet.</p>
+  </div>
