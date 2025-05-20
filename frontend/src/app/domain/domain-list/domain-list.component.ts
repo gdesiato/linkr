@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { DomainService, Domain } from '../../services/domain.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { DomainService, Domain } from '../../services/domain.service';
   selector: 'app-domain-list',
   templateUrl: './domain-list.component.html',
   styleUrls: ['./domain-list.component.scss'],
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule]
 })
 export class DomainListComponent implements OnInit {
   domains: Domain[] = [];
@@ -15,6 +16,24 @@ export class DomainListComponent implements OnInit {
   error = '';
 
   constructor(private domainService: DomainService) {}
+
+  newDomainUrl = '';
+
+addDomain(): void {
+  if (!this.newDomainUrl.trim()) return;
+
+  this.domainService.addDomain(this.newDomainUrl).subscribe({
+    next: (domain) => {
+      this.domains.push(domain); // Add it to the list
+      this.newDomainUrl = '';    // Clear the input
+    },
+    error: (err) => {
+      this.error = 'Failed to add domain.';
+      console.error(err);
+    }
+  });
+}
+
 
   ngOnInit(): void {
     this.domainService.getDomains().subscribe({

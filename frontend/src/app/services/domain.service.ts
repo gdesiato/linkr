@@ -21,4 +21,10 @@ export class DomainService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<Domain[]>(this.apiUrl, { headers });
   }
+
+  addDomain(url: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post<Domain>(this.apiUrl, { url }, { headers });
+  }  
 }
