@@ -1,5 +1,16 @@
 <div class="domain-container">
     <h2>Your Domains</h2>
+
+    <form (ngSubmit)="addDomain()" #domainForm="ngForm">
+      <input
+        type="text"
+        name="url"
+        placeholder="Enter domain (e.g. example.com)"
+        required
+        [(ngModel)]="newDomainUrl"
+      />
+      <button type="submit" [disabled]="!domainForm.valid">Add Domain</button>
+    </form>
   
     <div *ngIf="loading">Loading...</div>
     <div *ngIf="error">{{ error }}</div>
