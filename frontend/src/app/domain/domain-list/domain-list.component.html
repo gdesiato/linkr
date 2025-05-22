@@ -1,25 +1,29 @@
 <div class="domain-container">
-    <h2>Your Domains</h2>
-
-    <form (ngSubmit)="addDomain()" #domainForm="ngForm">
-      <input
-        type="text"
-        name="url"
-        placeholder="Enter domain (e.g. example.com)"
-        required
-        [(ngModel)]="newDomainUrl"
-      />
-      <button type="submit" [disabled]="!domainForm.valid">Add Domain</button>
-    </form>
-  
-    <div *ngIf="loading">Loading...</div>
-    <div *ngIf="error">{{ error }}</div>
-  
-    <ul *ngIf="!loading && domains.length > 0">
-      <li *ngFor="let domain of domains">
-        {{ domain.url }} <small>({{ domain.createdAt | date:'short' }})</small>
-      </li>
-    </ul>
-  
-    <p *ngIf="!loading && domains.length === 0">No domains yet.</p>
+  <div class="logout-button" style="text-align: right;">
+    <button (click)="logout()">Logout</button>
   </div>
+
+  <h2>Your Domains</h2>
+
+  <form (ngSubmit)="addDomain()" #domainForm="ngForm">
+    <input
+      type="text"
+      name="url"
+      placeholder="Enter domain (e.g. example.com)"
+      required
+      [(ngModel)]="newDomainUrl"
+    />
+    <button type="submit" [disabled]="!domainForm.valid">Add Domain</button>
+  </form>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="error">{{ error }}</div>
+
+  <ul *ngIf="!loading && domains.length > 0">
+    <li *ngFor="let domain of domains">
+      {{ domain.url }} <small>({{ domain.createdAt | date:'short' }})</small>
+    </li>
+  </ul>
+
+  <p *ngIf="!loading && domains.length === 0">No domains yet.</p>
+</div>

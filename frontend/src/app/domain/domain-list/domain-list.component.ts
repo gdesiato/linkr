@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { DomainService, Domain } from '../../services/domain.service';
 
 @Component({
@@ -14,26 +16,13 @@ export class DomainListComponent implements OnInit {
   domains: Domain[] = [];
   loading = true;
   error = '';
-
-  constructor(private domainService: DomainService) {}
-
   newDomainUrl = '';
 
-addDomain(): void {
-  if (!this.newDomainUrl.trim()) return;
-
-  this.domainService.addDomain(this.newDomainUrl).subscribe({
-    next: (domain) => {
-      this.domains.push(domain); // Add it to the list
-      this.newDomainUrl = '';    // Clear the input
-    },
-    error: (err) => {
-      this.error = 'Failed to add domain.';
-      console.error(err);
-    }
-  });
-}
-
+  constructor(
+    private domainService: DomainService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.domainService.getDomains().subscribe({
@@ -48,4 +37,25 @@ addDomain(): void {
       }
     });
   }
+
+  addDomain(): void {
+    if (!this.newDomainUrl.trim()) return;
+
+    this.domainService.addDomain(this.newDomainUrl).subscribe({
+      next: (domain) => {
+        this.domains.push(domain);
+        this.newDomainUrl = '';
+      },
+      error: (err) => {
+        this.error = 'Failed to add domain.';
+        console.error(err);
+      }
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
+
